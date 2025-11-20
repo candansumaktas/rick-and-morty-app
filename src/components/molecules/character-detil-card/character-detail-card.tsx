@@ -23,7 +23,7 @@ export default function CharacterDetailCard({ character }: Props) {
         <p><strong>Episodes:</strong> {character.episode.length}</p>
         <p><strong>Created:</strong> {new Date(character.created).toLocaleDateString()}</p>
         <div className="flex flex-wrap gap-2 mt-4">
-          {character.episode.slice(0, 5).map((ep, i) => (
+          {character.episode.slice(0, 5).map((_ep, i) => (
             <span
               key={i}
               className="px-3 py-1 text-xs bg-gray-100 rounded-full shadow-sm"
