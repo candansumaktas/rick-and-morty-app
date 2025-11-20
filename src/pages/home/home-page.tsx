@@ -1,17 +1,28 @@
+import { useState } from "react";
+import SearchBar from "../../components/molecules/search-bar/search-bar";
 import CharacterList from "../../components/organisms/character-list/character-list";
-
  
 export default function HomePage() {
-  return (
-    <main className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100 py-10 px-4 md:px-12">
-      <div className="max-w-6xl mx-auto">
-        <header className="mb-8 text-center">
-          <h1 className="text-4xl font-extrabold text-gray-900">Rick & Morty Multiverse</h1>
-          <p className="mt-2 text-gray-600">Explore characters from the Rick and Morty API.</p>
-        </header>
+  const [search, setSearch] = useState("");
 
-        <CharacterList />
-      </div>
-    </main>
+  return (
+    <div className="min-h-screen bg-linear-to-b from-gray-50 via-gray-100 to-gray-200 p-6">
+      <header className="max-w-7xl mx-auto mb-8">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2">
+          Rick & Morty Universe
+        </h1>
+        <p className="text-gray-700 text-lg sm:text-xl">
+          Explore characters, their episodes, and origins
+        </p>
+
+        <div className="mt-4">
+          <SearchBar value={search} onChange={setSearch} />
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto">
+        <CharacterList search={search} />
+      </main>
+    </div>
   );
 }

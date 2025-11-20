@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
- import type { Character } from "../types/character";
+ import type { ICharacter } from "../types/character";
 import { CharactersAPI } from "../api/rick-and-morty/characters.api";
 
 export function useCharacterDetail(id?: string | number | null) {
-  const [data, setData] = useState<Character | null>(null);
+  const [data, setData] = useState<ICharacter | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

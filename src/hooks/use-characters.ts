@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
- import type { Character } from "../types/character";
+import type { ICharacter } from "../types/character";
 import { CharactersAPI } from "../api/rick-and-morty/characters.api";
 
-export function useCharacters(page = 1) {
-  const [data, setData] = useState<Character[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+export function useCharacters(search: string = "") {
+  const [characters, setCharacters] = useState<ICharacter[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -12,18 +12,25 @@ export function useCharacters(page = 1) {
     setLoading(true);
     setError(null);
 
-CharactersAPI.getAll(page)
-  .then(res => {
-    setData(res.results);
-  })
-  .catch(err => setError(err.message))
-  .finally(() => setLoading(false));
+    const params: Record<string, string> = search ? { name: search } : {};
 
+    CharactersAPI.filter(params)
+      .then(res => {
+        if (!mounted) return;
+        setCharacters(res.results);
+      })
+      .catch(err => {
+        if (!mounted) return;
+        setError(err.message || "Failed to load characters");
+        setCharacters([]);
+      })
+      .finally(() => {
+        if (!mounted) return;
+        setLoading(false);
+      });
 
-    return () => {
-      mounted = false;
-    };
-  }, [page]);
+    return () => { mounted = false; };
+  }, [search]);
 
-  return { data, loading, error };
+  return { characters, loading, error };
 }

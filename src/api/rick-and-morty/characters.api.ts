@@ -1,20 +1,20 @@
-import type { Character, CharacterResponse } from "../../types/character";
+import type { ICharacter, ICharacterResponse } from "../../types/character";
 import { ENDPOINTS } from "../endpoints";
 import { http } from "../http-client";
 
 export const CharactersAPI = {
-    getAll: async (page = 1): Promise<CharacterResponse> => {
-        const res = await http.get<CharacterResponse>(`${ENDPOINTS.CHARACTERS}?page=${page}`);
+    getAll: async (page = 1): Promise<ICharacterResponse> => {
+        const res = await http.get<ICharacterResponse>(`${ENDPOINTS.CHARACTERS}?page=${page}`);
         return res.data;
     },
 
-    getById: async (id: number): Promise<Character> => {
-        const res = await http.get<Character>(`${ENDPOINTS.CHARACTERS}/${id}`);
+    getById: async (id: number): Promise<ICharacter> => {
+        const res = await http.get<ICharacter>(`${ENDPOINTS.CHARACTERS}/${id}`);
         return res.data;
     },
 
-    filter: async (params: Record<string, string>): Promise<CharacterResponse> => {
-        const res = await http.get<CharacterResponse>(ENDPOINTS.CHARACTERS, { params });
+    filter: async (params: Record<string, string>): Promise<ICharacterResponse> => {
+        const res = await http.get<ICharacterResponse>(ENDPOINTS.CHARACTERS, { params });
         return res.data;
     },
 };

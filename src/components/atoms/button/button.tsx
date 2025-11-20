@@ -1,17 +1,14 @@
-import React from "react";
-
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props {
   children: React.ReactNode;
+  onClick?: () => void;
+  className?: string;
 }
 
-export default function Button({ children, className = "", ...rest }: Props) {
+export default function Button({ children, onClick, className = "" }: Props) {
   return (
     <button
-      {...rest}
-      className={
-        "px-4 py-2 rounded-md border border-transparent bg-indigo-500 text-white hover:bg-indigo-600 transition " +
-        className
-      }
+      onClick={onClick}
+      className={`py-2 px-4 rounded-lg font-medium transition-colors ${className}`}
     >
       {children}
     </button>
