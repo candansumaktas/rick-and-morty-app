@@ -1,24 +1,29 @@
-import { useState, useEffect } from "react";
-import type { Character } from "../components/types/character";
+import { useEffect, useState } from "react";
+ import type { Character } from "../types/character";
+import { CharactersAPI } from "../api/rick-and-morty/characters.api";
 
-
-
-export const useCharacters = () => {
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [loading, setLoading] = useState(false);
+export function useCharacters(page = 1) {
+  const [data, setData] = useState<Character[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let mounted = true;
     setLoading(true);
-    fetch("https://rickandmortyapi.com/api/character")
-      .then(res => res.json())
-      .then(data => {
-        console.log("Fetched characters:", data.results);
-        setCharacters(data.results);
-      })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+    setError(null);
 
-  return { characters, loading, error };
-};
+CharactersAPI.getAll(page)
+  .then(res => {
+    setData(res.results);
+  })
+  .catch(err => setError(err.message))
+  .finally(() => setLoading(false));
+
+
+    return () => {
+      mounted = false;
+    };
+  }, [page]);
+
+  return { data, loading, error };
+}

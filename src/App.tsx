@@ -1,14 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/home-page";
-import CharacterPage from "./pages/character-page";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/home/home-page";
+import CharacterPage from "./pages/character/character-page";
 
 export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/character/:id" element={<CharacterPage />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
